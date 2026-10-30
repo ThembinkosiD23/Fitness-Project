@@ -78,3 +78,11 @@ ggplot(myDataSet, aes(x = gender, fill = factor(is_fit))) +
        y = "Count",
        fill = "Fitness Status (0 = Not Fit, 1 = Fit)") +
   theme_minimal()
+#Compare BMI Between Fit and Not Fit
+ggplot(myDataSet, aes(x = factor(is_fit), y = BMI, fill = factor(is_fit))) +
+  geom_boxplot() +
+  labs(title = "BMI Distribution by Fitness Status",
+       x = "Fitness Status (0 = Not Fit, 1 = Fit)",
+       y = "BMI",
+       fill = "Fitness Status") +
+  theme_minimal()
