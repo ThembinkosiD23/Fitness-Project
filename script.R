@@ -38,3 +38,70 @@ myDataSet$BMI <- myDataSet$weight_kg / ((myDataSet$height_cm / 100)^2)
 
 #6 Save the cleaned dataset
 write.csv(myDataSet, "cleaned_fitness_dataset.csv", row.names = FALSE)
+
+#EDA
+#load libraries
+library(ggplot2)
+library(corrplot)
+
+#table of fit vs not fit
+table(myDataSet$is_fit)
+#Bar chart of the target
+ggplot(myDataSet, aes(x = factor(is_fit), fill = factor(is_fit))) +
+  geom_bar() +
+  labs(title = "Distribution of Fitness Status",
+       x = "Fitness Status (0 = Not Fit, 1 = Fit)",
+       y = "Count",
+       fill = "Fitness Status (0 = Not Fit, 1 = Fit") +
+  theme_minimal()
+#sleep hours with fitness
+ggplot(myDataSet, aes(x = factor(is_fit), y = sleep_hours, fill = factor(is_fit))) +
+  geom_boxplot() +
+  labs(title = "Sleep Hours by Fitness Status",
+       x = "Fitness Status",
+       y = "Sleep Hours",
+       fill = "Fitness Status") +
+  theme_minimal()
+#Smokes with fitness
+ggplot(myDataSet, aes(x = factor(smokes), fill = factor(is_fit))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Fitness Status by Smoking Status",
+       x = "Smokes (0 = No, 1 = Yes)",
+       y = "Count",
+       fill = "Fitness Status (0 = Not Fit, 1 = Fit)") +
+  theme_minimal()
+#Gender with fitness
+ggplot(myDataSet, aes(x = gender, fill = factor(is_fit))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Fitness Status by Gender",
+       x = "Gender",
+       y = "Count",
+       fill = "Fitness Status (0 = Not Fit, 1 = Fit)") +
+  theme_minimal()
+#Compare BMI Between Fit and Not Fit
+ggplot(myDataSet, aes(x = factor(is_fit), y = BMI, fill = factor(is_fit))) +
+  geom_boxplot() +
+  labs(title = "BMI Distribution by Fitness Status",
+       x = "Fitness Status (0 = Not Fit, 1 = Fit)",
+       y = "BMI",
+       fill = "Fitness Status") +
+  theme_minimal()
+#Correlation matrix
+# Select only numeric columns
+numeric_Data <- myDataSet[, sapply(myDataSet, is.numeric)]
+
+# Calculate the correlation matrix
+cor_matrix <- cor(numeric_Data, use = "complete.obs")
+
+# Print the full table (this already shows the full matrix)
+print(round(cor_matrix, 2))
+
+# Draw the FULL visual heatmap (removed type = "upper")
+corrplot(cor_matrix, 
+         method = "color",                                                     # Gives the colored shading
+         addCoef.col = "black",                                                # Adds the numbers in black text
+         number.cex = 0.7,                                                    # Makes the font slightly smaller so it fits
+         tl.col = "black", 
+         tl.srt = 45,
+         title = "Full Correlation Matrix of Numeric Features",
+         mar = c(0, 0, 2, 0))
