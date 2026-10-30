@@ -68,5 +68,13 @@ ggplot(myDataSet, aes(x = factor(smokes), fill = factor(is_fit))) +
   labs(title = "Fitness Status by Smoking Status",
        x = "Smokes (0 = No, 1 = Yes)",
        y = "Count",
-       fill = "Fitness Status") +
+       fill = "Fitness Status (0 = Not Fit, 1 = Fit)") +
+  theme_minimal()
+#Gender with fitness
+ggplot(myDataSet, aes(x = gender, fill = factor(is_fit))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Fitness Status by Gender",
+       x = "Gender",
+       y = "Count",
+       fill = "Fitness Status (0 = Not Fit, 1 = Fit)") +
   theme_minimal()
