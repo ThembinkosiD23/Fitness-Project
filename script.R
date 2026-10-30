@@ -38,3 +38,20 @@ myDataSet$BMI <- myDataSet$weight_kg / ((myDataSet$height_cm / 100)^2)
 
 #6 Save the cleaned dataset
 write.csv(myDataSet, "cleaned_fitness_dataset.csv", row.names = FALSE)
+
+#EDA
+#load libraries
+library(ggplot2)
+library(corrplot)
+
+#table of fit vs not fit
+table(myDataSet$is_fit)
+
+#Bar chart of the target
+ggplot(myDataSet, aes(x = factor(is_fit), fill = factor(is_fit))) +
+  geom_bar() +
+  labs(title = "Distribution of Fitness Status",
+       x = "Fitness Status (0 = Not Fit, 1 = Fit)",
+       y = "Count",
+       fill = "Fitness Status") +
+  theme_minimal()
