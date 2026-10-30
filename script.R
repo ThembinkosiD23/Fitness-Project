@@ -86,3 +86,11 @@ ggplot(myDataSet, aes(x = factor(is_fit), y = BMI, fill = factor(is_fit))) +
        y = "BMI",
        fill = "Fitness Status") +
   theme_minimal()
+#Correlation matrix
+numeric_Data <- myDataSet[, sapply(myDataSet, is.numeric)]                     # Select only numeric columns
+cor_matrix <- cor(numeric_Data, use = "complete.obs")                          # Calculate the correlation matrix
+round(cor_matrix, 2)                                                           # Print the table
+corrplot(cor_matrix, method = "color", type = "upper",                         # Draw the visual heatmap
+         tl.col = "black", tl.srt = 45,
+         title = "Correlation Matrix of Numeric Features",
+         mar = c(0, 0, 2, 0))
