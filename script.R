@@ -46,7 +46,6 @@ library(corrplot)
 
 #table of fit vs not fit
 table(myDataSet$is_fit)
-
 #Bar chart of the target
 ggplot(myDataSet, aes(x = factor(is_fit), fill = factor(is_fit))) +
   geom_bar() +
@@ -55,12 +54,19 @@ ggplot(myDataSet, aes(x = factor(is_fit), fill = factor(is_fit))) +
        y = "Count",
        fill = "Fitness Status") +
   theme_minimal()
-
 #sleep hours with fitness
 ggplot(myDataSet, aes(x = factor(is_fit), y = sleep_hours, fill = factor(is_fit))) +
   geom_boxplot() +
   labs(title = "Sleep Hours by Fitness Status",
        x = "Fitness Status",
        y = "Sleep Hours",
+       fill = "Fitness Status") +
+  theme_minimal()
+#Smokes with fitness
+ggplot(myDataSet, aes(x = factor(smokes), fill = factor(is_fit))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Fitness Status by Smoking Status",
+       x = "Smokes (0 = No, 1 = Yes)",
+       y = "Count",
        fill = "Fitness Status") +
   theme_minimal()
