@@ -16,3 +16,25 @@ myDataSet$smokes <- as.numeric(myDataSet$smokes)
 
 # Verify it worked
 table(myDataSet$smokes)
+
+#2 Handle missing values in 'sleep_hours
+median_sleep <- median(myDataSet$sleep_hours, na.rm = TRUE)
+myDataSet$sleep_hours[is.na(myDataSet$sleep_hours)] <- median_sleep            # Impute with the median
+
+sum(is.na(myDataSet$sleep_hours))                                              # check for any NA
+
+#3Cap outliers in 'weight_kg'
+lower_cap <- quantile(myDataSet$weight_kg, 0.01, na.rm = TRUE)                 # Find the 1st and 99th percentiles
+upper_cap <- quantile(myDataSet$weight_kg, 0.99, na.rm = TRUE)
+myDataSet$weight_kg[myDataSet$weight_kg < lower_cap] <- lower_cap              # Replace values below/above with the cap
+myDataSet$weight_kg[myDataSet$weight_kg > upper_cap] <- upper_cap
+summary(myDataSet$weight_kg)
+
+#4 Encode 'gender' as a factor
+myDataSet$gender <- as.factor(myDataSet$gender)
+
+#5 Feature Engineering, new feature BMI
+myDataSet$BMI <- myDataSet$weight_kg / ((myDataSet$height_cm / 100)^2)
+
+#6 Save the cleaned dataset
+write.csv(myDataSet, "cleaned_fitness_dataset.csv", row.names = FALSE)
