@@ -52,7 +52,7 @@ ggplot(myDataSet, aes(x = factor(is_fit), fill = factor(is_fit))) +
   labs(title = "Distribution of Fitness Status",
        x = "Fitness Status (0 = Not Fit, 1 = Fit)",
        y = "Count",
-       fill = "Fitness Status") +
+       fill = "Fitness Status (0 = Not Fit, 1 = Fit") +
   theme_minimal()
 #sleep hours with fitness
 ggplot(myDataSet, aes(x = factor(is_fit), y = sleep_hours, fill = factor(is_fit))) +
